@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ 
+<sqlMap namespace="mem"> 
+
+    <resultMap type="memberVo" id="memberVo">
+    	<result property="user_Id" column="user_Id"/>
+    	<result property="user_Pw" column="user_Pw"/>
+    	<result property="user_Email" column="user_Email"/>
+    </resultMap>
+	
+	
+	<select id="memberSelect" parameterMap="memberVo" resultMap="memberVo">
+	SELECT userId as user_Id,userPw as user_Pw /*memberSelect 주석입니다.*/
+		,userEmail as user_Email 
+	FROM USERINFO
+	
+	<!-- id가 jdkMember인 구분을 포함시킵니다. <include refid="jdkMember"/> -->
+	<if test="user_Id != null and user_id != ''">
+		WHERE userId = #user_Id# AND userPw = #{user_Pw}
+	</if>
+	<if test="user_Email != null and user_Email != ''">
+		WHERE userEmail = #{user_Email}
+	</if>
+    </select>
+    
+    
+    <insert id="memberInsert" parameterMap="memberVo">
+    	/*memberInsert 회원가입*/
+    	INSERT INTO USERINFO(userId,userPw,userEmail) VALUES(#{user_Id},#{user_Pw},#{user_Email})
+    </insert>
+    
+    <delete id="memberDelete" parameterMap="memberVo">
+    	/*memberDelete회원탈퇴*/
+		DELETE FROM USERINFO WHERE userId =#{user_Id}
+    </delete>
+</sqlMap>

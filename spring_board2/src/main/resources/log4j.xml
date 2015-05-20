@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">  
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">  
+    <!-- \uCF58\uC194 \uB85C\uADF8 -->  
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">  
+        <!-- \uD328\uD134 \uB808\uC774\uC544\uC6C3 \uC124\uC815.. -->  
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%t> [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}] [%L] [%p] %m %n"/>  
+        </layout>  
+    </appender>  
+      
+    <!--  \uB0A0\uC9DC\uBCC4 \uB85C\uADF8 -->  
+    <appender name="dailyout" class="org.apache.log4j.DailyRollingFileAppender">  
+        <!-- \uC774\uAC83\uC740 \uB0A0\uC9DC\uBCC4\uB85C  \uB85C\uADF8\uB97C \uB0A8\uAE40. \uD30C\uC77C\uBA85.\uD655\uC7A5\uC790.DatePattern\uC73C\uB85C \uC815\uC758 \uD568-->  
+        <param name="file" value="dailyout.log"/>  
+        <param name="Append" value="true"/>  
+        <param name="DatePattern" value="'.'yyMMdd"/>  
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%t> [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}] [%L] [%p] %m %n"/>  
+        </layout>  
+    </appender>  
+       
+    <!-- \uD2B9\uC815 \uD06C\uAE30\uB9C8\uB2E4 \uBC31\uC5C5\uD558\uBA70 \uB85C\uADF8-->  
+    <appender name="rolling" class="org.apache.log4j.RollingFileAppender">  
+        <param name="file" value="c:\projects\rolling.log"/>  
+        <param name="Append" value="true"/>  
+        <param name="MaxFileSize" value="1kb"/>  
+       <param name="MaxBackupIndex" value="1"/>     
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%t> [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}] [%L] [%p] %m %n"/>  
+        </layout>  
+    </appender>  
+      
+    <!-- xml \uB85C\uADF8-->  
+    <!-- xml\uD615\uC2DD\uC73C\uB85C \uB85C\uADF8\uB97C \uB0A8\uAE40 -->  
+    <appender name="xmlout" class="org.apache.log4j.FileAppender">  
+        <param name="file" value="log4jxml.xml"/>  
+        <param name="Append" value="true"/>  
+        <layout class="org.apache.log4j.xml.XMLLayout"/>  
+    </appender>  
+       
+    <root>  
+        <level value="WARN"/>  
+       <appender-ref ref="dailyout"/>  
+    </root>  
+</log4j:configuration> 

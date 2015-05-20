@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="sql.MapperMaster.Board">
+
+    <resultMap type="com.jdk.vo.BoardVO" id="boardVo">
+    	<result property = "boardNo" column="boardNo"/>
+    	<result property = "boardTitle" column="boardTitle"/>
+    	<result property = "boardContent" column="boardContent"/>
+    	<result property = "boardCount" column="boardCount"/>
+    	<result property = "boardTime" column="boardTime"/>
+    	<result property = "boardUserId" column="boardUserId"/>
+    	<result property = "startBoard" column="startBoard"/>
+    	<result property = "endBoard" column="endBoard"/>
+    	<result property = "searchContent" column="searchContent"/>
+    </resultMap>
+	
+	<select id="boardSelect" resultType="boardVo" parameterType="boardVo">
+	SELECT  * /*boardSelect 주석입니다.글내용조회,검색,리스트 */
+	FROM (SELECT ROWNUM AS RNUM,BOARDNO,BOARDTITLE,BOARDCONTENT,BOARDUSERID,BOARDTIME,BOARDCOUNT FROM BOARDLIST ORDER BY BOARDNO ASC )  
+	<!-- id가 jdkMember인 구분을 포함시킵니다. <include refid="jdkMember"/> -->
+	<if test="searchMode != null and searchMode =''">
+		<if test="searchMode == '1'">WHERE BOARDTITLE LIKE '%'||#{searchContent}||'%' /* 제목만 검색 */</if>
+		<if test="searchMode == '2'">WHERE BOARDCONTENT LIKE '%'||#{searchContent}||'%' /* 내용만 검색 */</if>
+		<if test="searchMode == '3'">WHERE BOARDCONTENT LIKE '%'||#{searchContent}||'%' AND BOARDTITLE LIKE '%'||#{searchContent}||'%' /* 내용+제목만 검색 */</if>
+		
+		<if test="totalPageCount == '0'">WHERE RNUM &gt;= #{startBoard} AND RNUM &lt;= #{endBoard} </if>
+	</if>
+	
+	
+	<if test="searchMode != null or searchMode =''">
+		WHERE RNUM &gt;= #{startBoard} AND RNUM &lt;= #{endBoard} 
+	</if>
+	</select>
+	
+    
+    <select id="boardSelectCount" resultType="int" parameterType="boardVo">
+    /*boardSelectCount 글개수*/
+    	SELECT COUNT(BOARDNO) FROM BOARDLIST 
+    	
+	 <if test="searchMode != null and searchMode =''">
+		<if test="searchMode == '1'">WHERE BOARDTITLE LIKE '%'||#{searchContent}||'%' /* 제목만 검색 */</if>
+		<if test="searchMode == '2'">WHERE BOARDCONTENT LIKE '%'||#{searchContent}||'%' /* 내용만 검색 */</if>
+		<if test="searchMode == '3'">WHERE BOARDCONTENT LIKE '%'||#{searchContent}||'%' AND BOARDTITLE LIKE '%'||#{searchContent}||'%' /* 내용+제목만 검색 */</if>
+	</if>
+	
+    </select>
+    
+    <select id="boardView" resultType="boardVo" parameterType="boardVo">
+    	/*boardView*/
+    	SELECT * FROM BOARDLIST WHERE boardNo = #{boardNo}
+    </select>
+    
+    <insert id="boardInsert">
+    /*boardWriteInsert*/
+    	INSERT INTO BOARDLIST(BOARDNO,BOARDTITLE,BOARDCONTENT,BOARDUSERID)VALUES(BOARNUMNO.nextval, #{boardTitle},#{boardContent}, #{boardUserId})
+    </insert>
+    
+    
+    <!-- 조회수 증가 -->
+    <update id="boardViewCount" parameterType="boardVo">
+    /*boardViewCount*/
+    	UPDATE BOARDLIST
+    	SET BOARDCOUNT = BOARDCOUNT + 1
+    	WHERE BOARDNO = #{boardNo}
+    </update>
+    
+    <delete id="boardDelete" parameterType="boardVo">
+    /*boardDelete*/
+    	DELETE FROM BOARDLIST WHERE BOARDNO = #{boardNo}
+    </delete>
+    
+    <update id="boardUpdate" parameterType="boardVo">
+    /*boardUpdate*/
+    	UPDATE BOARDLIST
+    	SET BOARDTITLE = #{boardTitle}, BOARDCONTENT = #{boardContent}, BOARDTIME = sysdate
+    	WHERE BOARDNO = #{boardNo}
+    </update>
+</mapper>

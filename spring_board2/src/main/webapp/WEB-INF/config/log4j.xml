@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">  
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">  
+    <!-- \uCF58\uC194 \uB85C\uADF8 -->  
+    <appender name="stdout_debug" class="org.apache.log4j.ConsoleAppender">  
+        <!-- \uD328\uD134 \uB808\uC774\uC544\uC6C3 \uC124\uC815.. -->  
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%t> [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}] [%L] [%p] %m %n"/>  
+        </layout>  
+    </appender>  
+    
+    <appender name="stdout_info" class="org.apache.log4j.ConsoleAppender">  
+        <!-- \uD328\uD134 \uB808\uC774\uC544\uC6C3 \uC124\uC815.. -->  
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%t> [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}] [%L] [%p] %m %n"/>  
+        </layout>  
+    </appender> 
+      
+    <!--  \uB0A0\uC9DC\uBCC4 \uB85C\uADF8 -->  
+    <appender name="dailyout" class="org.apache.log4j.RollingFileAppender">  
+        <param name="file" value="dailyout.log"/>  
+        <param name="Append" value="true"/>  
+        <param name="MaxFileSize" value="1kb"/>  
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%t> [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}] [%L] [%p] %m %n"/>  
+        </layout>  
+    </appender>  
+       
+    <!-- 특정 크기마다 백업하며 로그 -->  
+    <appender name="rolling_debug" class="org.apache.log4j.RollingFileAppender">  
+        <param name="file" value="C:/Users/1/rolling.log"/>  
+        <param name="Append" value="true"/>  
+        <param name="MaxFileSize" value="1kb"/>  
+       <param name="MaxBackupIndex" value="1"/>     
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%t> [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}] [%L] [%p] %m %n"/>  
+        </layout>  
+    </appender> 
+    
+    <!-- 특정 크기마다 백업하며 로그 -->  
+    <appender name="rolling_info" class="org.apache.log4j.RollingFileAppender">  
+        <param name="file" value="C:/Users/1/rolling.log"/>  
+        <param name="Append" value="true"/>  
+        <param name="MaxFileSize" value="1kb"/>  
+       <param name="MaxBackupIndex" value="1"/>     
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%t> [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}] [%L] [%p] %m %n"/>  
+        </layout>  
+    </appender>   
+      
+    <!-- xml \uB85C\uADF8-->  
+    <!-- xml\uD615\uC2DD\uC73C\uB85C \uB85C\uADF8\uB97C \uB0A8\uAE40 -->  
+    <appender name="xmlout" class="org.apache.log4j.FileAppender">  
+        <param name="file" value="log4jxml.xml"/>  
+        <param name="Append" value="true"/>  
+        <layout class="org.apache.log4j.xml.XMLLayout"/>  
+    </appender>  
+       
+    <!-- <root>
+        <priority value="WARN" />
+        <appender-ref ref="rolling" /> 
+        <appender-ref ref="stdout" />
+    </root> -->
+    
+     <!-- Root Logger -->
+    <root>
+        <priority value="info" />
+        <appender-ref ref="rolling_info" /> 
+        <appender-ref ref="stdout_info" />
+    </root>
+    
+    <root>
+        <priority value="debug" />
+        <appender-ref ref="rolling_debug" /> 
+        <appender-ref ref="stdout_debug" />
+    </root>
+</log4j:configuration> 

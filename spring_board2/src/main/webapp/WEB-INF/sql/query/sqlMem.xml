@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ 
+<mapper namespace="sql.MapperMaster.Member">
+    <resultMap type="com.jdk.vo.MemberVO" id="memberVo">
+    	<result property="user_Id" column="user_Id"/>
+    	<result property="user_Pw" column="user_Pw"/>
+    	<result property="user_Email" column="user_Email"/>
+    </resultMap>
+	
+	
+	<select id="memberSelect" parameterType="memberVo" resultType="memberVo">
+	SELECT userId as user_Id,userPw as user_Pw /*memberSelect 주석입니다.*/
+		,userEmail as user_Email 
+	FROM USERINFO
+	<choose>
+		<when test="user_Id != null and user_Id != '' and user_Pw != null and user_Pw != ''">
+			WHERE userId = #{user_Id} AND userPw = #{user_Pw}
+		</when>
+		
+		<when test="user_Id != null and user_Id != ''">
+			WHERE userId = #{user_Id}
+		</when>
+	</choose>
+	<if test="user_Email != null and user_Email != ''">
+		WHERE userEmail = #{user_Email}
+	</if>
+    </select>
+    
+    <select id="memberExist" parameterType="memberVo" resultType="int">
+    	SELECT COUNT(userId) count /*memberExist 존재여부*/
+    	FROM USERINFO
+    	<choose>
+		<when test="user_Id != null and user_Id != '' and user_Pw != null and user_Pw != ''">
+			WHERE userId = #{user_Id} AND userPw = #{user_Pw}
+		</when>
+		
+		<when test="user_Id != null and user_Id != ''">
+			WHERE userId = #{user_Id}
+		</when>
+	</choose>
+    </select>
+    
+    
+    <insert id="memberInsert" parameterType="memberVo">
+    	/*memberInsert 회원가입*/
+    	INSERT INTO USERINFO(userId,userPw,userEmail) VALUES(#{user_Id},#{user_Pw},#{user_Email})
+    </insert>
+    
+    <delete id="memberDelete" parameterType="memberVo">
+    	/*memberDelete회원탈퇴*/
+		DELETE FROM USERINFO WHERE userId =#{user_Id}
+    </delete>
+</mapper>

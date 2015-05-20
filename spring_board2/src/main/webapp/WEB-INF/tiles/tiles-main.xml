@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Aapche Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd"> 
+<tiles-definitions>
+	
+	<!-- alert Layout -->	
+	<definition name="alert-layout" template="/WEB-INF/layout/alert-layout.jsp">
+		<put-attribute name="alert" value="/WEB-INF/common/alert.jsp" />
+	</definition>
+	
+	<!-- beforeLogin Layout -->	
+	<definition name="beforeLogin-layout" template="/WEB-INF/layout/default-layout.jsp">
+		<put-attribute name="title" expression="jdk's Homepage" />
+		<put-attribute name="menu" value="/WEB-INF/leftMenu/beforeLogin.jsp" />
+		<put-attribute name="body" value="/WEB-INF/index.jsp" />
+	</definition>
+	
+	<!-- afterLogin Layout -->	
+	<definition name="afterLogin-layout" template="/WEB-INF/layout/default-layout.jsp" extends="beforeLogin-layout">
+		<put-attribute name="menu" value="/WEB-INF/leftMenu/afterLogin.jsp" />
+	</definition>
+	
+	
+	<!-- newMemberJoin Layout -->	
+	<definition name="newMemberJoin-layout" template="/WEB-INF/layout/unKownMember-layout.jsp">
+		<put-attribute name="title" expression="jdk's Homepage" />
+		<put-attribute name="body" value="/WEB-INF/member/NewMember.jsp" />
+	</definition>
+	
+	<!-- memberFind Layout -->	
+	<definition name="findMemberFindMove-layout" template="/WEB-INF/layout/unKownMember-layout.jsp">
+		<put-attribute name="title" expression="jdk's Homepage" />
+		<put-attribute name="body" value="/WEB-INF/member/memFind.jsp" />
+	</definition>
+	
+	<!-- memberFind Layout -->	
+	<definition name="findMemberFind-layout" template="/WEB-INF/layout/unKownMember-layout.jsp">
+		<put-attribute name="title" expression="jdk's Homepage" />
+		<put-attribute name="body" value="/WEB-INF/member/memberFindResult.jsp" />
+	</definition>
+	
+	
+	
+	<!--                         board                                                  -->
+	<definition name="boardList-layout" template="/WEB-INF/layout/default-layout.jsp">
+		<put-attribute name="title" expression="jdk's Homepage" />
+		<put-attribute name="menu" value="/WEB-INF/leftMenu/afterLogin.jsp" />
+		<put-attribute name="body" value="/WEB-INF/board/boardList.jsp" />
+	</definition>
+	
+	<definition name="boardView-layout" template="/WEB-INF/layout/default-layout.jsp" extends="boardList-layout">
+		<put-attribute name="title" expression="jdk's Homepage" />
+		<put-attribute name="body" value="/WEB-INF/board/boardView.jsp" />
+	</definition>
+	
+	<definition name="boardUpdate-layout" template="/WEB-INF/layout/default-layout.jsp" extends="boardList-layout">
+		<put-attribute name="title" expression="jdk's Homepage" />
+		<put-attribute name="body" value="/WEB-INF/board/boardUpdate.jsp" />
+	</definition>
+	
+	<definition name="boardInsert-layout" template="/WEB-INF/layout/default-layout.jsp" extends="boardList-layout">
+		<put-attribute name="title" expression="jdk's Homepage" />
+		<put-attribute name="body" value="/WEB-INF/board/boardInsert.jsp" />
+	</definition>
+</tiles-definitions>
